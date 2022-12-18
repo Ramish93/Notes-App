@@ -4,16 +4,31 @@ import {Container} from "react-bootstrap"
 
 import NewNote from "./components/NewNotes"
 
-type NoteData = {
+export type Note ={
+  id: string
+} & NoteData
+
+export type NoteData = {
   title: string
   markdown: string
   tags: Tag[]
 }
-type Tag ={
+export type Tag ={
   id: string
   lable: string
 }
+export type RawNote = {
+  id: string
+}
+export type RawNoteData = {
+  title: string
+  markdown: string
+  tagIds: string[]
+}
+
 function App() {
+  const [notes, setNotes] = useLocalStorage<RawNote[]>("notes", [])
+  const [tags, setTags] = useLocalStorage<Tag[]>("tags", [])
   return (
     <Container className = "my-4">
       <Routes>
