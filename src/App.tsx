@@ -4,6 +4,15 @@ import {Container} from "react-bootstrap"
 
 import NewNote from "./components/NewNotes"
 
+type NoteData = {
+  title: string
+  markdown: string
+  tags: Tag[]
+}
+type Tag ={
+  id: string
+  lable: string
+}
 function App() {
   return (
     <Container className = "my-4">
