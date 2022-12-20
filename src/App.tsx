@@ -48,7 +48,7 @@ function App() {
     <Container className = "my-4">
       <Routes>
           <Route path="/" element={<h1>Hi</h1>}/>
-          <Route path="/new" element={<NewNote onSubmit={onCreateNote} />}/>
+          <Route path="/new" element={<NewNotes onSubmit={onCreateNote} />}/>
           <Route path="/:id">
             <Route index element={<h1> Show</h1>} />
             <Route path="edit" element={<h1> edit</h1>} />

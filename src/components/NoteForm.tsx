@@ -2,6 +2,7 @@ import React,{useRef, useState} from 'react'
 import {Form, Stack, Row, Col, Button } from "react-bootstrap"
 import CreateableReactSelect from "react-select/creatable"
 import {Link} from "react-router-dom"
+import {v4 as uuidV4} from "uuid"
 
 import {NoteData, Tag} from "../App"
 
@@ -40,7 +41,13 @@ const NoteForm = ({onSubmit}: NoteFormProps) => {
                         <Form.Label>
                             Tags
                         </Form.Label>
-                        <CreateableReactSelect isMulti value={selectedTags.map((tag) => {
+                        <CreateableReactSelect 
+                        onCreateOption={label => {
+                            const newTag = {id: uuidV4(), label}
+                            onAddTag(newTag)
+                            setSelectedTags(prev => [...prev, newTag])
+                        }} 
+                        isMulti value={selectedTags.map((tag) => {
                             return {label: tag.label, value: tag.id}
                         })}
                         onChange={tags => {
