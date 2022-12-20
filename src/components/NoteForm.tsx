@@ -8,6 +8,8 @@ import {NoteData, Tag} from "../App"
 
 type NoteFormProps = {
     onSubmit: (data: NoteData) => void
+    onAddTag: (tag: Tag) => void
+    availableTags: Tag[]
 }
 
 const NoteForm = ({onSubmit}: NoteFormProps) => {
