@@ -1,8 +1,9 @@
 import React,{useRef, useState} from 'react'
 import {Form, Stack, Row, Col, Button } from "react-bootstrap"
 import CreateableReactSelect from "react-select/creatable"
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import {v4 as uuidV4} from "uuid"
+
 
 import {NoteData, Tag} from "../App"
 
@@ -12,18 +13,21 @@ type NoteFormProps = {
     availableTags: Tag[]
 }
 
-const NoteForm = ({onSubmit}: NoteFormProps) => {
+const NoteForm = ({onSubmit, availableTags, onAddTag}: NoteFormProps) => {
     const titleRef = useRef<HTMLInputElement>(null)
     const textRef = useRef<HTMLTextAreaElement>(null)
     const [selectedTags, setSelectedTags] = useState<Tag[]>([])
+
+    const navigate = useNavigate()
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
         onSubmit({
             title: titleRef.current!.value,
             markdown: textRef.current!.value,
-            tags: []
+            tags: selectedTags
         })
+        navigate("..")
     }
 
   return (
@@ -49,7 +53,11 @@ const NoteForm = ({onSubmit}: NoteFormProps) => {
                             onAddTag(newTag)
                             setSelectedTags(prev => [...prev, newTag])
                         }} 
-                        isMulti value={selectedTags.map((tag) => {
+                        isMulti 
+                        value={selectedTags.map((tag) => {
+                            return {label: tag.label, value: tag.id}
+                        })}
+                        options={availableTags.map(tag => {
                             return {label: tag.label, value: tag.id}
                         })}
                         onChange={tags => {

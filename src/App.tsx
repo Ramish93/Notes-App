@@ -35,7 +35,9 @@ function App() {
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", [])
 
   const notesWithTags = useMemo(() => {
-    return {...notes, tags: tags.filter(tag => note.tagIds.includes(tag.id))}
+   return notes.map(note => {
+    return {...note, tags: tags.filter(tag => note.tagIds.includes(tag.id))}
+   })
   },[notes, tags])
 
   const onCreateNote = ({tags, ...data}: NoteData) => {
